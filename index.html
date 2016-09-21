@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>EU Research Funding Network</title>
+<!--   <meta name="description" content="">
+  <meta name="author" content=""> -->
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- D3.js
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
+
+  <!-- Sigma.js
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="../src/sigma.core.js"></script>
+  <script src="../src/conrad.js"></script>
+  <script src="../src/utils/sigma.utils.js"></script>
+  <script src="../src/utils/sigma.polyfills.js"></script>
+  <script src="../src/sigma.settings.js"></script>
+  <script src="../src/classes/sigma.classes.dispatcher.js"></script>
+  <script src="../src/classes/sigma.classes.configurable.js"></script>
+  <script src="../src/classes/sigma.classes.graph.js"></script>
+  <script src="../src/classes/sigma.classes.camera.js"></script>
+  <script src="../src/classes/sigma.classes.quad.js"></script>
+  <script src="../src/classes/sigma.classes.edgequad.js"></script>
+  <script src="../src/captors/sigma.captors.mouse.js"></script>
+  <script src="../src/captors/sigma.captors.touch.js"></script>
+  <script src="../src/renderers/sigma.renderers.canvas.js"></script>
+  <script src="../src/renderers/sigma.renderers.webgl.js"></script>
+  <script src="../src/renderers/sigma.renderers.svg.js"></script>
+  <script src="../src/renderers/sigma.renderers.def.js"></script>
+  <script src="../src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+  <script src="../src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+  <script src="../src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+  <script src="../src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+  <script src="../src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+  <script src="../src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.utils.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.nodes.def.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.edges.def.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.edges.curve.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.labels.def.js"></script>
+  <script src="../src/renderers/svg/sigma.svg.hovers.def.js"></script>
+  <script src="../src/middlewares/sigma.middlewares.rescale.js"></script>
+  <script src="../src/middlewares/sigma.middlewares.copy.js"></script>
+  <script src="../src/misc/sigma.misc.animation.js"></script>
+  <script src="../src/misc/sigma.misc.bindEvents.js"></script>
+  <script src="../src/misc/sigma.misc.bindDOMEvents.js"></script>
+  <script src="../src/misc/sigma.misc.drawHovers.js"></script>
+  <!-- Plugins -->
+  <script src="../plugins/sigma.parsers.json/sigma.parsers.json.js"></script>
+  <script src="../plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+  <script src="../plugins/sigma.layout.noverlap/sigma.layout.noverlap.js"></script>
+  <script src="../plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="twelve column" style="margin: 2em 0 2em 0">
+        <h1>EU Research Funding Network</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve column" style="text-align:justify">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quodsi ipsam honestatem undique pertectam atque absolutam. Cenasti in vita numquam bene, cum omnia in ista Consumis squilla atque acupensere cum decimano. Hoc mihi cum tuo fratre convenit. Id enim volumus, id contendimus, ut officii fructus sit ipsum officium. Tu autem inter haec tantam multitudinem hominum interiectam non vides nec laetantium nec dolentium? Duo Reges: constructio interrete. Quicquid porro animo cernimus, id omne oritur a sensibus; Quae qui non vident, nihil umquam magnum ac cognitione dignum amaverunt. Num igitur eum postea censes anxio animo aut sollicito fuisse? </p>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="container" style="width:100%; max-width:none"> --> 
+  <div class="container" > 
+    <div class="row">
+      <div class="twelve columns" id="graph">
+        <script src="index.js"></script>
+      </div>
+        <div class="navigation">
+          <h2>Suggestions</h2>
+          <p class='hover'>Hover over a node to see more information about the organization.</p>
+          <p class='click01'>Click on a node to highlight the nodes connected to it.</p>
+          <p class='click02 hidden'>Go on a line to find out more about the collaborations.<br>
+            Click on another node to highlight its connections.<br>
+            Or click anywhere else to go back.
+          </p>
+        </div>
+       
+    <div id='tooltip' class='invisible navigation'></div> 
+    </div>
+  </div>
+  <div class="container">
+    <div class="three columns">
+        <h2>Footer 1</h2>
+    </div>
+    <div class="three columns">
+        <h2>Footer 2</h2>
+    </div>
+    <div class="three columns">
+        <h2>Footer 3</h2>
+    </div>
+    <div class="three columns">
+        <h2>Footer 4</h2>
+    </div>
+  </div>
+  
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
+
+

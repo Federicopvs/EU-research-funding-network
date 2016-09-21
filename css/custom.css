@@ -1,0 +1,37 @@
+#graph {
+	height: 800px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.floater {
+	
+}
+
+.navigation {
+	background-color: rgba(254,196,79,0.5);
+	padding: 1em;
+	left: -35%;
+	position: absolute;
+	top: 10%;
+	width: 40%;
+}
+
+#tooltip {
+	background-color: rgba(254,196,79,0.5);
+	transition-property: all;
+	transition-duration: 0.5s;
+	color :rgba(0,0,0,1);
+	left:90%;
+}
+
+#tooltip.invisible {
+	background-color: rgba(255,255,0,0);
+	color :rgba(0,0,0,0);
+}
+
+.hidden {
+	display: none;
+}
