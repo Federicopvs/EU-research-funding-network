@@ -1,3 +1,13 @@
+var width = parseFloat(document.getElementById('graph-container').offsetWidth);
+var height = parseFloat(document.getElementById('graph-container').offsetHeight);
+
+var loading = d3.select('#graph-container').append("text")
+    .attr("x", width / 2)
+    .attr("y", height / 2)
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .text("Simulating. One moment please…");
+
 var minNodeSize = 5;
 var maxNodeSize = 10;
 var minEdgeSize = 0.1;
@@ -33,6 +43,14 @@ sigma.parsers.json('giantComponent.json', {
 		  
 		}
 		);
+
+setTimeout(function () {
+	loading.remove();
+	nodeStyling();
+	edgeStyling();
+	interactiveNodes();
+	highlight();
+},1000)
 
 function nodeStyling () {
 	var s = sigma.instances()[0];
@@ -76,10 +94,10 @@ function noOverlap () {
 var s = sigma.instances()[0];
 var noverlapListener = s.configNoverlap({
   nodeMargin: 0.2,
-  scaleNodes: 1.05,
+  scaleNodes: 1,
   gridSize: 100,
-  // easing: 'quadraticInOut', // animation transition function
-  duration: 1000   // animation duration. Long here for the purposes of this example only
+  easing: 'quadraticInOut', // animation transition function
+  duration: 500   // animation duration. Long here for the purposes of this example only
 });
 // Bind the events:
 noverlapListener.bind('start stop interpolate', function(e) {
@@ -117,6 +135,9 @@ function interactiveNodes () {
 		//Change node size (too laggy)
 		// d.data.node.size = maxNodeSize;
 		// s.refresh();
+		//Change cursor
+		d3.select('#graph')
+		.style('cursor', 'default')
 		//Display tooltip
 		d3.select('#tooltip')
 		.classed('invisible', false)
@@ -132,13 +153,19 @@ function interactiveNodes () {
 		//Change node size back to normal
 		// d.data.node.size = maxNodeSize/2;
 		// s.refresh();
+		//Change cursor back
+		d3.select('#graph')
+		.style('cursor', 'grab')
 		//Remove text
-		d3.select('#tooltip')
-		.selectAll('p')
-		.remove();
-		//Hide tooltip
-		d3.select('#tooltip')
-		.classed('invisible', true)
+		setTimeout(function () {
+			d3.select('#tooltip')
+			.selectAll('p')
+			.remove();
+			},1000)
+			//Hide tooltip
+			d3.select('#tooltip')
+			.classed('invisible', true)
+
 	})
 }
 
@@ -270,3 +297,7 @@ function commafy( num ) {
     }
     return str.join('.');
     }
+
+setTimeout(function(){
+    document.body.className="";
+},500);

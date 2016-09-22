@@ -1,3 +1,8 @@
+body.preload *{
+animation-duration: 0s !important;
+-webkit-animation-duration: 0s !important;
+transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;}
+
 #graph {
 	height: 800px;
 }
@@ -10,6 +15,10 @@ h1 {
 	
 }
 
+button {
+	width: 100%
+}
+
 .navigation {
 	background-color: rgba(254,196,79,0.5);
 	padding: 1em;
@@ -17,6 +26,10 @@ h1 {
 	position: absolute;
 	top: 10%;
 	width: 40%;
+}
+
+.click01, .click02 {
+	animation: glowing 0.5s;
 }
 
 #tooltip {
@@ -34,4 +47,14 @@ h1 {
 
 .hidden {
 	display: none;
+}
+
+#graph:hover {
+	cursor: grab;
+}
+
+@keyframes glowing {
+  0% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(0,0,0,0); }
+  50% { background-color: rgba(255,255,204,1); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
+  100% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
 }

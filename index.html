@@ -86,41 +86,47 @@
   <script src="../plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
 
 </head>
-<body>
 
+<body class='preload'>
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="twelve column" style="margin: 2em 0 2em 0">
+      <div class="twelve columns" style="margin: 2em 0 2em 0">
         <h1>EU Research Funding Network</h1>
       </div>
     </div>
     <div class="row">
-      <div class="twelve column" style="text-align:justify">
+      <div class="twelve columns" style="text-align:justify">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quodsi ipsam honestatem undique pertectam atque absolutam. Cenasti in vita numquam bene, cum omnia in ista Consumis squilla atque acupensere cum decimano. Hoc mihi cum tuo fratre convenit. Id enim volumus, id contendimus, ut officii fructus sit ipsum officium. Tu autem inter haec tantam multitudinem hominum interiectam non vides nec laetantium nec dolentium? Duo Reges: constructio interrete. Quicquid porro animo cernimus, id omne oritur a sensibus; Quae qui non vident, nihil umquam magnum ac cognitione dignum amaverunt. Num igitur eum postea censes anxio animo aut sollicito fuisse? </p>
       </div>
     </div>
-  </div>
-  <!-- <div class="container" style="width:100%; max-width:none"> --> 
-  <div class="container" > 
     <div class="row">
-      <div class="twelve columns" id="graph">
-        <script src="index.js"></script>
+      <div class="three columns" style="text-align:justify">
+        <button>Horizon 2020</button>
+        <button>Framework Program 7</button>
       </div>
-        <div class="navigation">
-          <h2>Suggestions</h2>
-          <p class='hover'>Hover over a node to see more information about the organization.</p>
-          <p class='click01'>Click on a node to highlight the nodes connected to it.</p>
-          <p class='click02 hidden'>Go on a line to find out more about the collaborations.<br>
-            Click on another node to highlight its connections.<br>
-            Or click anywhere else to go back.
-          </p>
+      <div class="six columns" style="height:150px; text-align:justify; line-height:1">
+        <ul style="margin-bottom:0"><li class='hover'>Hover over a node to see more information about the organization.</li></ul>
+        <div>
+          <ul class='click01' style="margin-bottom:0"><li>Click on a node to highlight the nodes connected to it.</li></ul>
+          <ul class="click02 hidden" style="margin-bottom:0">
+            <li>Go on a line to find out more about the collaborations.</li>
+            <li>Click on another node to highlight its connections.</li>
+            <li> Or click anywhere else to go back.</li>
+          </ul> 
         </div>
-       
-    <div id='tooltip' class='invisible navigation'></div> 
+      </div>
     </div>
   </div>
+
+  <div class="container" id="graph-container" style="width:80%; max-width:none"> 
+    <div class="twelve columns" id="graph"> 
+      <script src="index.js"></script>
+      <div id='tooltip' class='invisible navigation'></div> 
+    </div>
+  </div>
+
   <div class="container">
     <div class="three columns">
         <h2>Footer 1</h2>
