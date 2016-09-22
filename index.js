@@ -1,8 +1,8 @@
 var borderToggle = 0;
 d3.select("#showBorders").on('click', function () {
-	console.log(borderToggle)
 	if (borderToggle == 0) {
 		d3.selectAll('div').classed('show-border', true);
+		d3.select('#showBorders').select('button').text('Nascondi bordi');
 		borderToggle = 1;
 	} else {
 		d3.selectAll('div').classed('show-border', false);
