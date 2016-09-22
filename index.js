@@ -2,10 +2,11 @@ var borderToggle = 0;
 d3.select("#showBorders").on('click', function () {
 	if (borderToggle == 0) {
 		d3.selectAll('div').classed('show-border', true);
-		d3.select('#showBorders').select('button').text('Nascondi bordi');
+		d3.select('#showBorders').text('Nascondi bordi');
 		borderToggle = 1;
 	} else {
 		d3.selectAll('div').classed('show-border', false);
+		d3.select('#showBorders').text('Mostra bordi');
 		borderToggle = 0;
 	}
 })
