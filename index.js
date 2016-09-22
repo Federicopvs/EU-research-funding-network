@@ -1,3 +1,15 @@
+var borderToggle = 0;
+d3.select("#showBorders").on('click', function () {
+	console.log(borderToggle)
+	if (borderToggle == 0) {
+		d3.selectAll('div').classed('show-border', true);
+		borderToggle = 1;
+	} else {
+		d3.selectAll('div').classed('show-border', false);
+		borderToggle = 0;
+	}
+})
+
 var width = parseFloat(document.getElementById('graph-container').offsetWidth);
 var height = parseFloat(document.getElementById('graph-container').offsetHeight);
 
@@ -156,15 +168,15 @@ function interactiveNodes () {
 		//Change cursor back
 		d3.select('#graph')
 		.style('cursor', 'grab')
+		//Hide tooltip
+		d3.select('#tooltip')
+		.classed('invisible', true)
 		//Remove text
 		setTimeout(function () {
 			d3.select('#tooltip')
 			.selectAll('p')
 			.remove();
-			},1000)
-			//Hide tooltip
-			d3.select('#tooltip')
-			.classed('invisible', true)
+		},51)
 
 	})
 }

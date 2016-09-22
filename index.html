@@ -92,8 +92,9 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="twelve columns" style="margin: 2em 0 2em 0">
+      <div class="twelve columns" style="margin: 1em 0">
         <h1>EU Research Funding Network</h1>
+        <p style="text-align:center"><button id="showBorders" style="width:20%">Mostra bordi</button></p>
       </div>
     </div>
     <div class="row">
@@ -102,28 +103,35 @@
       </div>
     </div>
     <div class="row">
-      <div class="three columns" style="text-align:justify">
-        <button>Horizon 2020</button>
-        <button>Framework Program 7</button>
+      <div class="four columns" style="text-align:center">
+        <ul id="button-list" class="vertically-aligned">
+          <li><button>Horizon 2020</button></li>
+          <li><button>Framework Program 7</button></li>
+        </ul>
       </div>
-      <div class="six columns" style="height:150px; text-align:justify; line-height:1">
-        <ul style="margin-bottom:0"><li class='hover'>Hover over a node to see more information about the organization.</li></ul>
-        <div>
-          <ul class='click01' style="margin-bottom:0"><li>Click on a node to highlight the nodes connected to it.</li></ul>
-          <ul class="click02 hidden" style="margin-bottom:0">
-            <li>Go on a line to find out more about the collaborations.</li>
-            <li>Click on another node to highlight its connections.</li>
-            <li> Or click anywhere else to go back.</li>
-          </ul> 
-        </div>
+      <div class="four columns" style="text-align:justify; line-height:1">
+        <ul style="margin-bottom:0">
+        <li class='hover'>Drag the white space to move the graph.</li>
+        <li class='hover'>Scroll to zoom.</li>
+        <li class='hover'>Hover over a node to see more information about the organization.</li>
+        </ul>
       </div>
+      <div class="four columns" style="text-align:justify; line-height:1">
+        <ul class="click01" style="margin-bottom:0"><li>Click on a node to highlight the nodes connected to it.</li></ul>
+        <ul class="click02 hidden" style="margin-bottom:0">
+          <li>Go on a line to find out more about the collaborations.</li>
+          <li>Click on another node to highlight its connections.</li>
+          <li> Or click anywhere else to go back.</li>
+        </ul> 
+      </div>
+      
     </div>
   </div>
 
   <div class="container" id="graph-container" style="width:80%; max-width:none"> 
     <div class="twelve columns" id="graph"> 
       <script src="index.js"></script>
-      <div id='tooltip' class='invisible navigation'></div> 
+      <div id='tooltip' class='invisible'></div> 
     </div>
   </div>
 

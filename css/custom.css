@@ -1,3 +1,8 @@
+.show-border {
+	border-style: solid;
+	border-width: 0.5px;
+}
+
 body.preload *{
 animation-duration: 0s !important;
 -webkit-animation-duration: 0s !important;
@@ -16,16 +21,34 @@ h1 {
 }
 
 button {
-	width: 100%
+	width: 100%;
+	margin-bottom: 0;
 }
 
-.navigation {
-	background-color: rgba(254,196,79,0.5);
-	padding: 1em;
-	left: -35%;
-	position: absolute;
-	top: 10%;
-	width: 40%;
+ul {
+	margin-bottom: 0;
+}
+
+#button-list {
+    list-style-type: none;
+}
+
+.vertically-aligned {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
 }
 
 .click01, .click02 {
@@ -34,10 +57,14 @@ button {
 
 #tooltip {
 	background-color: rgba(254,196,79,0.5);
+	padding: 1em;
+	left: 10%;
+	position: absolute;
+	width: 20%;
+	min-width: 200px;
+
 	transition-property: all;
-	transition-duration: 0.5s;
-	color :rgba(0,0,0,1);
-	left:90%;
+	transition-duration: 50ms;
 }
 
 #tooltip.invisible {
