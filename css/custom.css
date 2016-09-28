@@ -23,6 +23,7 @@ transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, paddi
 	width: 100%;
 	max-width: none;
 	background: rgba(0,0,0,0.5);
+	color: white;
 }
 
 .outer:first-child {
