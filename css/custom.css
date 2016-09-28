@@ -1,3 +1,7 @@
+body {
+	background-color: rgba(0,0,0,0.05);
+}
+
 .show-border {
 	border-style: solid;
 	border-width: 0.5px;
@@ -11,14 +15,86 @@ transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, paddi
 
 #graph {
 	height: 800px;
+	background: rgba(255,255,255,1);
+}
+
+
+.outer {
+	width: 100%;
+	max-width: none;
+	background: rgba(0,0,0,0.5);
+}
+
+.outer:first-child {
+	margin-bottom: 2em;
+}
+
+.outer:nth-child {
+	margin-top: 2em;
 }
 
 h1 {
 	text-align: center;
 }
 
-.floater {
-	
+.instructions {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: stretch;
+	    -ms-flex-align: stretch;
+	        align-items: stretch;
+	-ms-flex-line-pack: stretch;
+	    align-content: stretch;
+}
+
+.buttons {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-ms-flex-pack: distribute;
+	    justify-content: space-around;
+	-webkit-justify-content: space-around;
+}
+
+.points {
+	line-height: 1;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-ms-flex-pack: distribute;
+	    justify-content: space-around;
+	-webkit-box-align: space-around;
+	    -ms-flex-align: space-around;
+	        align-items: space-around;
+	-webkit-align-items: space-around;
+}
+
+.points div {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	margin: 0;
+	padding: 0.5em 0 0.5em 0;
+}
+
+.points div>p{
+	margin: 0 0.5em 0 0.5em;
 }
 
 button {
@@ -26,44 +102,42 @@ button {
 	margin-bottom: 0;
 }
 
-ul {
-	margin-bottom: 0;
+.navIcon {
+	width: 40px;
+	height: 40px;
+	float: left;
+	margin-right: 5px;
 }
 
-#button-list {
-    list-style-type: none;
-}
-
-.vertically-aligned {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-}
-
-.click01, .click02 {
+.click01 p, .click02 p{
 	-webkit-animation: glowing 0.5s;
 	        animation: glowing 0.5s;
 }
 
 #tooltip {
-	background-color: rgba(254,196,79,0.5);
+	background-color: rgba(0,0,0,0.05);
 	padding: 1em;
-	left: 10%;
+	top: 10%;
 	position: absolute;
-	width: 20%;
+	width: 25%;
 	min-width: 200px;
 
-	-webkit-transition-property: all;
+	
 
-	transition-property: all;
+/*	transition-property: all;
+	transition-duration: 50ms;
 	-webkit-transition-duration: 50ms;
-	        transition-duration: 50ms;
+	-webkit-transition-property: all;*/
+	        
+}
+
+#tooltip p {
+	margin: 0;
+	padding: 0.5em;
+}
+
+#tooltip strong {
+	color: rgb(8,104,172);
 }
 
 #tooltip.invisible {
@@ -72,7 +146,11 @@ ul {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
+}
+
+#graph {
+	margin: 2em auto;
 }
 
 #graph:hover {
@@ -81,13 +159,13 @@ ul {
 }
 
 @-webkit-keyframes glowing {
-  0% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(0,0,0,0); }
-  50% { background-color: rgba(255,255,204,1); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
-  100% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
+  0% { background-color: rgba(0,0,0,0.25); }
+  50% { background-color: rgba(,0,0,0.5); }
+  100% { background-color: rgba(,0,0,0.25); }
 }
 
 @keyframes glowing {
-  0% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(0,0,0,0); }
-  50% { background-color: rgba(255,255,204,1); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
-  100% { background-color: rgba(255,255,204,0.5); box-shadow: 0 0 0.5px rgba(254,217,118,0.5); }
+  0% { background-color: rgba(0,0,0,0.25); }
+  50% { background-color: rgba(,0,0,0.5); }
+  100% { background-color: rgba(,0,0,0.25); }
 }

@@ -14,12 +14,14 @@ d3.select("#showBorders").on('click', function () {
 var width = parseFloat(document.getElementById('graph-container').offsetWidth);
 var height = parseFloat(document.getElementById('graph-container').offsetHeight);
 
-var loading = d3.select('#graph-container').append("text")
-    .attr("x", width / 2)
-    .attr("y", height / 2)
-    .attr("dy", ".35em")
-    .style("text-anchor", "middle")
-    .text("Simulating. One moment please…");
+var dataset;
+
+// var loading = d3.select('#graph-container').append("text")
+//     .attr("x", width / 2)
+//     .attr("y", height / 2)
+//     .attr("dy", ".35em")
+//     .style("text-anchor", "middle")
+//     .text("Simulating. One moment please…");
 
 var minNodeSize = 5;
 var maxNodeSize = 10;
@@ -36,9 +38,9 @@ sigma.parsers.json('giantComponent.json', {
           	autoRescale: ['nodePosition', 'edgeSize'],
 
           	minNodeSize: minNodeSize,
-          	maxNodeSize: maxNodeSize,
+          	maxNodeSize: maxNodeSize/2,
           	minEdgeSize: minEdgeSize,
-          	maxEdgeSize: maxEdgeSize,
+          	maxEdgeSize: maxEdgeSize/2,
 
           	nodeColor: 'default',
 		    defaultNodeColor: '#ff0000',
@@ -57,13 +59,23 @@ sigma.parsers.json('giantComponent.json', {
 		}
 		);
 
+var loading = d3.select('#graph').append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height);
+    // .attr("fill", "rgba(99,99,99,0.5)")
+    // .style("text-anchor", "middle")
+    // .text("Simulating. One moment please…")
+
 setTimeout(function () {
 	loading.remove();
 	nodeStyling();
 	edgeStyling();
 	interactiveNodes();
 	highlight();
-},1000)
+	// interactiveEdges();
+}, 1000)
 
 function nodeStyling () {
 	var s = sigma.instances()[0];
@@ -71,9 +83,15 @@ function nodeStyling () {
 	//Create color scale with D3
 	var minProj = d3.min(nodes, function(d) { return d.numProj; });
 	var maxProj = d3.max(nodes, function(d) { return d.numProj; });
+
 	nodeColorScale = d3.scaleLog()
-				.domain([minProj, maxProj])
-				.range(["rgb(168,221,181)", "rgb(78,179,211)"]);
+			.domain([minProj, maxProj])
+			.range(["rgb(204,235,197)", "rgb(8,104,172)"]);
+	//Old scale
+	// nodeColorScale = d3.scaleLog()
+	// 			.domain([minProj, maxProj])
+	// 			.range(["rgb(168,221,181)", "rgb(78,179,211)"]);
+
 	//Style nodes with sigma
 	nodes.forEach(function (n) {
 		n.size= maxNodeSize/2;
@@ -90,41 +108,43 @@ function edgeStyling () {
 	var maxCollab = d3.max(edges, function(d) { return d.collaborations; });
 	edgeColorScale = d3.scaleLog()
 				.domain([minCollab, maxCollab])
-				.range(["rgba(168,221,181,0.5)", "rgba(78,179,211,1.0)"]);
+				.range(["rgb(204,235,197)", "rgb(8,104,172)"]);
+				// .range(["rgba(204,235,197,0.5)", "rgb(8,104,172,1.0)"]);
 	edgeSizeScale = d3.scaleLog()
 				.domain([minCollab, maxCollab])
-				.range([minEdgeSize, maxEdgeSize/2]);
+				.range([maxEdgeSize/2, minEdgeSize]);
 	//Style nodes with sigma
 	edges.forEach(function (e) {
 		e.color=edgeColorScale(e.collaborations);
-		e.size=edgeSizeScale(e.collaborations);
+		// e.size= edgeSizeScale(e.collaborations);
+		e.size = maxEdgeSize;
 	})
 	s.refresh();
 }
 
-// Configure the noverlap layout:
-function noOverlap () {
-var s = sigma.instances()[0];
-var noverlapListener = s.configNoverlap({
-  nodeMargin: 0.2,
-  scaleNodes: 1,
-  gridSize: 100,
-  easing: 'quadraticInOut', // animation transition function
-  duration: 500   // animation duration. Long here for the purposes of this example only
-});
-// Bind the events:
-noverlapListener.bind('start stop interpolate', function(e) {
-  console.log(e.type);
-  if(e.type === 'start') {
-    console.time('noverlap');
-  }
-  if(e.type === 'interpolate') {
-    console.timeEnd('noverlap');
-  }
-});
-// Start the layout:
-s.startNoverlap();
-}
+// // Configure the noverlap layout:
+// function noOverlap () {
+// var s = sigma.instances()[0];
+// var noverlapListener = s.configNoverlap({
+//   nodeMargin: 0.2,
+//   scaleNodes: 1,
+//   gridSize: 100,
+//   easing: 'quadraticInOut', // animation transition function
+//   duration: 500   // animation duration. Long here for the purposes of this example only
+// });
+// // Bind the events:
+// noverlapListener.bind('start stop interpolate', function(e) {
+//   console.log(e.type);
+//   if(e.type === 'start') {
+//     console.time('noverlap');
+//   }
+//   if(e.type === 'interpolate') {
+//     console.timeEnd('noverlap');
+//   }
+// });
+// // Start the layout:
+// s.startNoverlap();
+// }
 
 // Add a method to the graph model that returns an
 // object with every neighbors of a node inside:
@@ -156,10 +176,12 @@ function interactiveNodes () {
 		.classed('invisible', false)
 		//Add text
 		d3.select('#tooltip')
-		.append('p')
-		.text(d.data.node.name + ' (' + d.data.node.country + ') participated in ' + d.data.node.numProj + ' projects with ' + d.data.node.collaborators + ' collaborators.')
-		.append('p')
-		.text('It intermediated ' + d.data.node.dependentOrgs + ' organizations.');
+		.html('<p><strong>' + toTitleCase(d.data.node.name) + '</strong> participated in <strong>' + d.data.node.numProj + '</strong> projects with <strong>' + d.data.node.collaborators + '</strong> collaborators.</p><p>It intermediated <strong>' + d.data.node.dependentOrgs + '</strong> organizations.</p>')
+
+		// .append('p')
+		// .text(d.data.node.name + ' (' + d.data.node.country + ') participated in ' + d.data.node.numProj + ' projects with ' + d.data.node.collaborators + ' collaborators.')
+		// .append('p')
+		// .text('It intermediated ' + d.data.node.dependentOrgs + ' organizations.');
 	})
 
 	s.bind('outNode', function (d) {
@@ -181,6 +203,8 @@ function interactiveNodes () {
 
 	})
 }
+
+var highlighted = 0;
 
 function highlight () {
 	var s = sigma.instances()[0];
@@ -206,22 +230,26 @@ function highlight () {
 	// We do the same for the edges, and we only keep
 	// edges that have both extremities colored.
 	s.bind('clickNode', function(e) {
+		highlighted = 1;
 	    var nodeId = e.data.node.id,
 	        toKeep = s.graph.neighbors(nodeId);
 	    toKeep[nodeId] = e.data.node;
 
 		nodes.forEach(function(n) {
-	      if (toKeep[n.id])
+	      if (toKeep[n.id]) {
 	        n.color = n.originalColor;
-	      else
+	    	// n.size = maxNodeSize;
+	      } else {
 	        //n.color = 'rgba(0,0,0,0)';
 	    	n.hidden = true;
+	    	}
 	    });
 
 	    edges.forEach(function(e) {
 	      if (toKeep[e.source] && toKeep[e.target]) {
 	        e.color = e.originalColor;
-	    	e.size = maxEdgeSize; }
+	    	// e.size = maxEdgeSize; 
+	    }
 	      else
 	        //e.color = 'rgba(0,0,0,0)';
 	    	e.hidden = true;
@@ -232,17 +260,44 @@ function highlight () {
 	    // update effective.
 	    s.refresh();
 
-	    interactiveEdges();
+	    //Make edges responsive
+	    s.bind('overEdge', function (d) {
+			//Display tooltip
+			d3.select('#tooltip')
+			.classed('invisible', false)
+			//Add text
+			d3.select('#tooltip')
+			.html('<p><strong>' + d.data.edge.source + '</strong> and <strong>' + d.data.edge.target + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
+				// .append('p')
+				// .text(d.data.edge.source + ' and ' + d.data.edge.source + ' worked toherther on ' + d.data.edge.collaborations + ' projects.')
+				// .append('p')
+				// .text('The total budget of their colabroations amounts to €' + commafy(d.data.edge.collBudget) + '.');
+		})
+			s.bind('outEdge', function (d) {
+			//Change node size back to normal
+			// d.data.node.size = maxNodeSize/2;
+			// s.refresh();
+			//Remove text
+			d3.select('#tooltip')
+			.selectAll('p')
+			.remove();
+			//Hide tooltip
+			d3.select('#tooltip')
+			.classed('invisible', true)
+		})
+
 	    //Change navigation
-        d3.select('.click01').classed('hidden', true);
-        d3.select('.click02').classed('hidden', false);
+        d3.selectAll('.click01').classed('hidden', true);
+        d3.selectAll('.click02').classed('hidden', false);
 	});
 
 	// When the stage is clicked, we just color each
 	// node and edge with its original color.
 	s.bind('clickStage', function(e) {
+		highlighted = 0;
 	    nodes.forEach(function(n) {
 	      n.color = n.originalColor;
+	      n.size = n.originalSize;
 	      n.hidden = false;
 	    });
 
@@ -252,51 +307,23 @@ function highlight () {
 	      e.hidden = false;
 	    });
 
+	    //Make edges unresponsive
+	    s.unbind('overEdge')
+		s.unbind('outEdge')
+
 	    // Same as in the previous event:
 	    s.refresh();
 
 	    //Change navigation
-	    d3.select('.click01').classed('hidden', false);
-        d3.select('.click02').classed('hidden', true);
+	    d3.selectAll('.click01').classed('hidden', false);
+        d3.selectAll('.click02').classed('hidden', true);
 	});
  }
 
-  function interactiveEdges () {
-  	var s = sigma.instances()[0];
-	var edges = s.graph.edges();
-
-	edges.forEach(function(e) {
-	    e.originalColor = e.color;
-	    e.originalSize = e.size;
-	  });
-
-	// s.bind('overEdge', function (d) {
-	// 	//Change node size (too laggy)
-	// 	// d.data.node.size = maxNodeSize;
-	// 	// s.refresh();
-	// 	//Display tooltip
-	// 	d3.select('#tooltip')
-	// 	.classed('invisible', false)
-	// 	//Add text
-	// 	d3.select('#tooltip')
-	// 		.append('p')
-	// 		.text(d.data.edge.source + ' and ' + d.data.edge.source + ' worked toherther on ' + d.data.edge.collaborations + ' projects.')
-	// 		.append('p')
-	// 		.text('The total budget of their colabroations amounts to €' + commafy(d.data.edge.collBudget) + '.');
-	// })
-
-	// 	s.bind('outEdge', function (d) {
-	// 	//Change node size back to normal
-	// 	// d.data.node.size = maxNodeSize/2;
-	// 	// s.refresh();
-	// 	//Remove text
-	// 	d3.select('#tooltip')
-	// 	.selectAll('p')
-	// 	.remove();
-	// 	//Hide tooltip
-	// 	d3.select('#tooltip')
-	// 	.classed('invisible', true)
-	// })
+//Convert names to title case
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 //Add commas every three digits (tooltip)
@@ -314,3 +341,25 @@ function commafy( num ) {
 setTimeout(function(){
     document.body.className="";
 },500);
+
+function selectList () {
+	d3.json('giantComponent.json', function (error, data) {
+		if (error) throw error;
+
+	console.log(data);
+	dataset = data;
+
+	var select = d3.select("body")
+      .append("div")
+      .append("select")
+
+    select.selectAll("option")
+      .data(dataset.nodes)
+      .enter()
+      .append("option")
+      .attr("value", function (d) { return d.id; })
+      .text(function (d) { return d.name + ' (' + d.country + ')'; })
+      .sort(function (d) { return d.name});
+
+	})
+}
