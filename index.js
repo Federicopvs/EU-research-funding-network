@@ -249,6 +249,9 @@ function highlight () {
 			//Display tooltip
 			d3.select('#tooltipEdge')
 			.classed('invisible', false)
+			//Change cursor
+			d3.select('#graph')
+			.style('cursor', 'pointer')
 			//Add text
 			d3.select('#tooltipEdge')
 			.html('<p><strong>' + d.data.edge.source + '</strong> and <strong>' + d.data.edge.target + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
@@ -257,6 +260,9 @@ function highlight () {
 			//Change node size back to normal
 			// d.data.node.size = maxNodeSize/2;
 			// s.refresh();
+			//Change cursor
+			d3.select('#graph')
+			.style('cursor', 'grab')
 			//Remove text
 			d3.select('#tooltipEdge')
 			.selectAll('p')
