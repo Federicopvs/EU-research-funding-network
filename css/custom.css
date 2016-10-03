@@ -24,14 +24,11 @@ transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, paddi
 	max-width: none;
 	background: rgba(0,0,0,0.5);
 	color: white;
+	padding: 1em;
 }
 
 .outer:first-child {
 	margin-bottom: 2em;
-}
-
-.outer:nth-child {
-	margin-top: 2em;
 }
 
 h1 {
@@ -102,7 +99,13 @@ button {
 	width: 100%;
 	margin-bottom: 0;
 	height: 30%;
-	font-size: 0.8em;
+	font-size: 1.5em;
+	line-height: 1;
+	padding: 0.5em 0 0.8em 0;
+}
+
+.buttonSmall {
+	font-size: 0.6em;
 }
 
 .navIcon {
@@ -169,6 +172,16 @@ button {
   0% { background-color: rgba(0,0,0,0.25); }
   50% { background-color: rgba(,0,0,0.5); }
   100% { background-color: rgba(,0,0,0.25); }
+}
+
+.footer {
+	text-align: center;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
 }
 
 #SOD_logo {

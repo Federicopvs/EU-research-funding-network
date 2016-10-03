@@ -1,27 +1,7 @@
-var borderToggle = 0;
-d3.select("#showBorders").on('click', function () {
-	if (borderToggle == 0) {
-		d3.selectAll('div').classed('show-border', true);
-		d3.select('#showBorders').text('Nascondi bordi');
-		borderToggle = 1;
-	} else {
-		d3.selectAll('div').classed('show-border', false);
-		d3.select('#showBorders').text('Mostra bordi');
-		borderToggle = 0;
-	}
-})
-
 var width = parseFloat(document.getElementById('graph-container').offsetWidth);
 var height = parseFloat(document.getElementById('graph-container').offsetHeight);
 
 var dataset;
-
-// var loading = d3.select('#graph-container').append("text")
-//     .attr("x", width / 2)
-//     .attr("y", height / 2)
-//     .attr("dy", ".35em")
-//     .style("text-anchor", "middle")
-//     .text("Simulating. One moment please…");
 
 var minNodeSize = 5;
 var maxNodeSize = 10;
@@ -56,21 +36,12 @@ sigma.parsers.json('giantComponent.json', {
 		  }
 	});
 
-var loading = d3.select('#graph').append("rect")
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", width)
-    .attr("height", height);
-    // .attr("fill", "rgba(99,99,99,0.5)")
-    // .style("text-anchor", "middle")
-    // .text("Simulating. One moment please…")
-
 setTimeout(function () {
-	loading.remove();
 	nodeStyling();
 	edgeStyling();
 	interactiveNodes();
 	highlight();
+	githubLink();
 	// interactiveEdges();
 }, 1000)
 
@@ -174,11 +145,6 @@ function interactiveNodes () {
 		//Add text
 		d3.select('#tooltipNode')
 		.html('<p><strong>' + toTitleCase(d.data.node.name) + '</strong> participated in <strong>' + d.data.node.numProj + '</strong> projects with <strong>' + d.data.node.collaborators + '</strong> collaborators.</p><p>It intermediated <strong>' + d.data.node.dependentOrgs + '</strong> organizations.</p>')
-
-		// .append('p')
-		// .text(d.data.node.name + ' (' + d.data.node.country + ') participated in ' + d.data.node.numProj + ' projects with ' + d.data.node.collaborators + ' collaborators.')
-		// .append('p')
-		// .text('It intermediated ' + d.data.node.dependentOrgs + ' organizations.');
 	})
 
 	s.bind('outNode', function (d) {
@@ -205,13 +171,22 @@ function switchFocus () {
 	var nodes = s.graph.nodes();
 	var edges = s.graph.edges();
 	
+	// d3.select("#deathStarTrigger").on('click', function () {
+	// 	nodes.forEach(function (n) {
+	// 		if (n.deathStar==false) { n.hidden = true; }
+	// 	})
+	// 	s.refresh();
+	// 	s.unbind('clickStage');	
+	// 	})
 	d3.select("#deathStarTrigger").on('click', function () {
-		nodes.forEach(function (n) {
-			if (n.deathStar==false) { n.hidden = true; }
-		})
-		s.refresh();	
-		})
-	}
+	sigma.parsers.json(
+  	'deathStar.json',
+  	s,
+  	function() {
+    	s.refresh();
+  		})
+  	});
+}
 
 function highlight () {
 	var s = sigma.instances()[0];
@@ -232,7 +207,7 @@ function highlight () {
 
 	// When a node is clicked, we check for each node
 	// if it is a neighbor of the clicked one. If not,
-	// we set its color as grey, and else, it takes its
+	// we set it invisible, and else, it takes its
 	// original color.
 	// We do the same for the edges, and we only keep
 	// edges that have both extremities colored.
@@ -275,10 +250,6 @@ function highlight () {
 			//Add text
 			d3.select('#tooltipEdge')
 			.html('<p><strong>' + d.data.edge.source + '</strong> and <strong>' + d.data.edge.target + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
-				// .append('p')
-				// .text(d.data.edge.source + ' and ' + d.data.edge.source + ' worked toherther on ' + d.data.edge.collaborations + ' projects.')
-				// .append('p')
-				// .text('The total budget of their colabroations amounts to €' + commafy(d.data.edge.collBudget) + '.');
 		})
 			s.bind('outEdge', function (d) {
 			//Change node size back to normal
@@ -369,4 +340,14 @@ function selectList () {
       .sort(function (d) { return d.name});
 
 	})
+}
+
+
+//Change githubLogo on mouseover
+function githubLink () {
+d3.select('#githubLink').on('mouseover', function (){
+d3.select('#githubLink').attr('src', 'icons/github_mark_inv.png');})
+
+d3.select('#githubLink').on('mouseout', function (){
+d3.select('#githubLink').attr('src', 'icons/github_mark.png');})
 }
