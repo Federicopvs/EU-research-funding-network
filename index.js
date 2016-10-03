@@ -138,7 +138,7 @@ function interactiveNodes () {
 		// s.refresh();
 		//Change cursor
 		d3.select('#graph')
-		.style('cursor', 'default')
+		.style('cursor', 'pointer')
 		//Display tooltip
 		d3.select('#tooltipNode')
 		.classed('invisible', false)
@@ -218,6 +218,7 @@ function highlight () {
 	    toKeep[nodeId] = e.data.node;
 
 		nodes.forEach(function(n) {
+			n.hidden = false;
 	      if (toKeep[n.id]) {
 	        n.color = n.originalColor;
 	    	// n.size = maxNodeSize;
@@ -228,6 +229,7 @@ function highlight () {
 	    });
 
 	    edges.forEach(function(e) {
+	    	e.hidden = false;
 	      if (toKeep[e.source] && toKeep[e.target]) {
 	        e.color = e.originalColor;
 	    	// e.size = maxEdgeSize; 
