@@ -54,10 +54,7 @@ sigma.parsers.json('giantComponent.json', {
 		  	container: document.getElementById('graph'),
     		type: 'canvas'
 		  }
-
-		  
-		}
-		);
+	});
 
 var loading = d3.select('#graph').append("rect")
     .attr("x", 0)
@@ -172,10 +169,10 @@ function interactiveNodes () {
 		d3.select('#graph')
 		.style('cursor', 'default')
 		//Display tooltip
-		d3.select('#tooltip')
+		d3.select('#tooltipNode')
 		.classed('invisible', false)
 		//Add text
-		d3.select('#tooltip')
+		d3.select('#tooltipNode')
 		.html('<p><strong>' + toTitleCase(d.data.node.name) + '</strong> participated in <strong>' + d.data.node.numProj + '</strong> projects with <strong>' + d.data.node.collaborators + '</strong> collaborators.</p><p>It intermediated <strong>' + d.data.node.dependentOrgs + '</strong> organizations.</p>')
 
 		// .append('p')
@@ -192,19 +189,29 @@ function interactiveNodes () {
 		d3.select('#graph')
 		.style('cursor', 'grab')
 		//Hide tooltip
-		d3.select('#tooltip')
+		d3.select('#tooltipNode')
 		.classed('invisible', true)
 		//Remove text
-		setTimeout(function () {
-			d3.select('#tooltip')
-			.selectAll('p')
-			.remove();
-		},51)
-
+		d3.select('#tooltipNode')
+		.selectAll('p')
+		.remove();
 	})
 }
 
 var highlighted = 0;
+
+function switchFocus () {
+	var s = sigma.instances()[0];
+	var nodes = s.graph.nodes();
+	var edges = s.graph.edges();
+	
+	d3.select("#deathStarTrigger").on('click', function () {
+		nodes.forEach(function (n) {
+			if (n.deathStar==false) { n.hidden = true; }
+		})
+		s.refresh();	
+		})
+	}
 
 function highlight () {
 	var s = sigma.instances()[0];
@@ -263,10 +270,10 @@ function highlight () {
 	    //Make edges responsive
 	    s.bind('overEdge', function (d) {
 			//Display tooltip
-			d3.select('#tooltip')
+			d3.select('#tooltipEdge')
 			.classed('invisible', false)
 			//Add text
-			d3.select('#tooltip')
+			d3.select('#tooltipEdge')
 			.html('<p><strong>' + d.data.edge.source + '</strong> and <strong>' + d.data.edge.target + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
 				// .append('p')
 				// .text(d.data.edge.source + ' and ' + d.data.edge.source + ' worked toherther on ' + d.data.edge.collaborations + ' projects.')
@@ -278,11 +285,11 @@ function highlight () {
 			// d.data.node.size = maxNodeSize/2;
 			// s.refresh();
 			//Remove text
-			d3.select('#tooltip')
+			d3.select('#tooltipEdge')
 			.selectAll('p')
 			.remove();
 			//Hide tooltip
-			d3.select('#tooltip')
+			d3.select('#tooltipEdge')
 			.classed('invisible', true)
 		})
 

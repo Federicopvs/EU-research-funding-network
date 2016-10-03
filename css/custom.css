@@ -117,15 +117,13 @@ button {
 	        animation: glowing 0.5s;
 }
 
-#tooltip {
+.tooltip {
 	background-color: rgba(0,0,0,0.05);
 	padding: 1em;
 	top: 10%;
 	position: absolute;
 	width: 25%;
 	min-width: 200px;
-
-	
 
 /*	transition-property: all;
 	transition-duration: 50ms;
@@ -134,16 +132,16 @@ button {
 	        
 }
 
-#tooltip p {
+.tooltip p {
 	margin: 0;
 	padding: 0.5em;
 }
 
-#tooltip strong {
+.tooltip strong {
 	color: rgb(8,104,172);
 }
 
-#tooltip.invisible {
+.tooltip.invisible {
 	background-color: rgba(255,255,0,0);
 	color :rgba(0,0,0,0);
 }
@@ -171,4 +169,8 @@ button {
   0% { background-color: rgba(0,0,0,0.25); }
   50% { background-color: rgba(,0,0,0.5); }
   100% { background-color: rgba(,0,0,0.25); }
+}
+
+#SOD_logo {
+	width: 80%;
 }

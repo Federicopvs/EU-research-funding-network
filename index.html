@@ -105,8 +105,8 @@
     </div>
     <div class="row instructions">
       <div class="four columns buttons" style="text-align:center">
-        <button>Horizon 2020</button>
-        <button>Framework Program 7</button>
+        <button id="giantComponentTrigger">Horizon 2020</button>
+        <button id="deathStarTrigger">Framework Program 7</button>
       </div>
       <div class="four columns points">
         <div><img src="icons/drag.png" class="navIcon"> <p>Drag the white space to move the graph.</p></div>
@@ -124,8 +124,9 @@
 
   <div class="container" id="graph-container" style="width:80%; max-width:none"> 
     <div class="twelve columns" id="graph"> 
+      <div id='tooltipNode' class='tooltip invisible'></div> 
+      <div id='tooltipEdge' class='tooltip invisible'></div> 
       <script src="index.js"></script>
-      <div id='tooltip' class='invisible'></div> 
     </div>
   </div>
 
@@ -133,9 +134,11 @@
     <div class="container">
       <div class="three columns">
           <h2>Footer 1</h2>
+          <img src="icons/SOD_logo.png" id="SOD_logo"/>
       </div>
       <div class="three columns">
           <h2>Footer 2</h2>
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" rel="dct:type">work</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
       </div>
       <div class="three columns">
           <h2>Footer 3</h2>
