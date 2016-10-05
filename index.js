@@ -8,6 +8,8 @@ var maxNodeSize = 10;
 var minEdgeSize = 0.1;
 var maxEdgeSize = 1;
 
+wait();
+
 sigma.parsers.json('giantComponent.json', {
 
           container: 'graph',
@@ -42,8 +44,18 @@ setTimeout(function () {
 	interactiveNodes();
 	highlight();
 	githubLink();
-	// interactiveEdges();
+	switchFocus();
+	waitOver();
 }, 1000)
+
+function wait() {
+	d3.select('body').style('cursor', 'wait');
+	console.log('wait');
+}
+
+function waitOver () {
+	d3.select('body').style('cursor', 'default');
+}
 
 function nodeStyling () {
 	var s = sigma.instances()[0];
@@ -139,6 +151,10 @@ function interactiveNodes () {
 		//Change cursor
 		d3.select('#graph')
 		.style('cursor', 'pointer')
+		//.style('cursor: -webkit-', 'pointer')
+
+		//Make edges not interactive
+
 		//Display tooltip
 		d3.select('#tooltipNode')
 		.classed('invisible', false)
@@ -154,6 +170,10 @@ function interactiveNodes () {
 		//Change cursor back
 		d3.select('#graph')
 		.style('cursor', 'grab')
+		.style('cursor', '-webkit-grab')
+
+		//Make edges not interactive
+
 		//Hide tooltip
 		d3.select('#tooltipNode')
 		.classed('invisible', true)
@@ -178,14 +198,64 @@ function switchFocus () {
 	// 	s.refresh();
 	// 	s.unbind('clickStage');	
 	// 	})
+	var deathStarToggle = 0;
+	
 	d3.select("#deathStarTrigger").on('click', function () {
-	sigma.parsers.json(
-  	'deathStar.json',
-  	s,
-  	function() {
-    	s.refresh();
-  		})
-  	});
+		//Wait cursor
+		wait();
+		if (deathStarToggle==0) {
+			
+			//Generate new graph
+			sigma.parsers.json(
+		  	'deathStar.json',
+		  	s,
+		  	function() {
+		    	s.refresh();
+		  		})
+			//Style new graph
+			setTimeout(function () {
+			nodeStyling();
+			edgeStyling();
+			interactiveNodes();
+			highlight();
+			//Set zoom level
+			s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 2.5 });
+			//Change cursor
+			waitOver();
+			//Change button
+			d3.select('.buttonSmall').html('Back to<br>');
+			d3.select('.buttonBig').html('Giant Component');
+			}, 1000)
+			//Change toggle
+			deathStarToggle = 1;
+		} else {
+			// //Wait cursor
+			// wait();
+			//Generate new graph
+			sigma.parsers.json(
+		  	'giantComponent.json',
+		  	s,
+		  	function() {
+		    	s.refresh();
+		  		})
+			//Style new graph
+			setTimeout(function () {
+			nodeStyling();
+			edgeStyling();
+			interactiveNodes();
+			highlight();
+			//Change cursor
+			waitOver();
+			//Set zoom level
+			s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1 });
+			//Change button
+			d3.select('.buttonSmall').html('Zoom into<br>');
+			d3.select('.buttonBig').html('Death Star');
+			}, 1000)
+			//Change toggle
+			deathStarToggle = 0;
+		}
+	});
 }
 
 function highlight () {
@@ -252,9 +322,10 @@ function highlight () {
 			//Change cursor
 			d3.select('#graph')
 			.style('cursor', 'pointer')
+			//.style('cursor: -webkit-', 'pointer');
 			//Add text
 			d3.select('#tooltipEdge')
-			.html('<p><strong>' + d.data.edge.source + '</strong> and <strong>' + d.data.edge.target + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
+			.html('<p><strong>' + toTitleCase(d.data.edge.sourceName) + '</strong> and <strong>' + toTitleCase(d.data.edge.targetName) + '</strong> worked together on <strong>' + d.data.edge.collaborations + '</strong> projects.</p><p>The total budget of their collaborations amounts to <strong>€ ' + commafy(d.data.edge.collBudget) + '.</p>');
 		})
 			s.bind('outEdge', function (d) {
 			//Change node size back to normal
@@ -263,6 +334,7 @@ function highlight () {
 			//Change cursor
 			d3.select('#graph')
 			.style('cursor', 'grab')
+			.style('cursor', '-webkit-grab');
 			//Remove text
 			d3.select('#tooltipEdge')
 			.selectAll('p')
