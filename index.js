@@ -50,7 +50,6 @@ setTimeout(function () {
 
 function wait() {
 	d3.select('body').style('cursor', 'wait');
-	console.log('wait');
 }
 
 function waitOver () {
@@ -148,13 +147,14 @@ function interactiveNodes () {
 		//Change node size (too laggy)
 		// d.data.node.size = maxNodeSize;
 		// s.refresh();
+
+		//Make edges unresponsive
+		s.settings('enableEdgeHovering', false)
+
 		//Change cursor
 		d3.select('#graph')
 		.style('cursor', 'pointer')
 		//.style('cursor: -webkit-', 'pointer')
-
-		//Make edges not interactive
-
 		//Display tooltip
 		d3.select('#tooltipNode')
 		.classed('invisible', false)
@@ -172,7 +172,8 @@ function interactiveNodes () {
 		.style('cursor', 'grab')
 		.style('cursor', '-webkit-grab')
 
-		//Make edges not interactive
+		//Make edges unresponsive
+		s.settings('enableEdgeHovering', true)
 
 		//Hide tooltip
 		d3.select('#tooltipNode')

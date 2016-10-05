@@ -189,3 +189,32 @@ button {
 #githubLink:hover {
 	background-position: 0 0;
 }
+
+
+
+#legend{
+background: rgba(241,111,92,1);
+background: -moz-linear-gradient(left, rgba(241,111,92,1) 0%, rgba(246,41,12,1) 0%, rgba(204,235,197,1) 0%, rgba(8,104,172,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241,111,92,1)), color-stop(0%, rgba(246,41,12,1)), color-stop(0%, rgba(204,235,197,1)), color-stop(100%, rgba(8,104,172,1)));
+background: -webkit-linear-gradient(left, rgba(241,111,92,1) 0%, rgba(246,41,12,1) 0%, rgba(204,235,197,1) 0%, rgba(8,104,172,1) 100%);
+background: -o-linear-gradient(left, rgba(241,111,92,1) 0%, rgba(246,41,12,1) 0%, rgba(204,235,197,1) 0%, rgba(8,104,172,1) 100%);
+background: -ms-linear-gradient(left, rgba(241,111,92,1) 0%, rgba(246,41,12,1) 0%, rgba(204,235,197,1) 0%, rgba(8,104,172,1) 100%);
+background: linear-gradient(to right, rgba(241,111,92,1) 0%, rgba(246,41,12,1) 0%, rgba(204,235,197,1) 0%, rgba(8,104,172,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f16f5c', endColorstr='#0868ac', GradientType=1 );
+}
+
+#lessColl {
+	position: relative;
+	float: left;
+	text-align: left;
+	padding: 5px 0 5px 10px;
+	line-height: 1em;
+}
+
+#moreColl {
+	position: relative;
+	float: right;
+	text-align: right;
+	padding: 5px 10px 5px 0px;
+	line-height: 1em;
+}
