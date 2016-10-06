@@ -192,20 +192,12 @@ function switchFocus () {
 	var nodes = s.graph.nodes();
 	var edges = s.graph.edges();
 	
-	// d3.select("#deathStarTrigger").on('click', function () {
-	// 	nodes.forEach(function (n) {
-	// 		if (n.deathStar==false) { n.hidden = true; }
-	// 	})
-	// 	s.refresh();
-	// 	s.unbind('clickStage');	
-	// 	})
 	var deathStarToggle = 0;
 	
 	d3.select("#deathStarTrigger").on('click', function () {
 		//Wait cursor
 		wait();
 		if (deathStarToggle==0) {
-			
 			//Generate new graph
 			sigma.parsers.json(
 		  	'deathStar.json',
@@ -213,25 +205,32 @@ function switchFocus () {
 		  	function() {
 		    	s.refresh();
 		  		})
+
 			//Style new graph
 			setTimeout(function () {
-			nodeStyling();
-			edgeStyling();
-			interactiveNodes();
-			highlight();
-			//Set zoom level
-			s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 2.5 });
-			//Change cursor
-			waitOver();
-			//Change button
-			d3.select('.buttonSmall').html('Back to<br>');
-			d3.select('.buttonBig').html('Giant Component');
+				nodeStyling();
+				edgeStyling();
+				interactiveNodes();
+				highlight();
+				//Set zoom level
+				s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 2.5 });
+				//Change cursor
+				waitOver();
+				//Change button
+				d3.select('.buttonSmall').html('Back to<br>');
+				d3.select('.buttonBig').html('Giant Component');
+				//Reset navigation
+		    	d3.selectAll('.click01').classed('hidden', false);
+	        	d3.selectAll('.click02').classed('hidden', true);
+	        	//Deactivate edge hovering
+	        	s.unbind('overEdge')
+				s.unbind('outEdge')
+				s.refresh();
 			}, 1000)
 			//Change toggle
 			deathStarToggle = 1;
+
 		} else {
-			// //Wait cursor
-			// wait();
 			//Generate new graph
 			sigma.parsers.json(
 		  	'giantComponent.json',
@@ -241,17 +240,24 @@ function switchFocus () {
 		  		})
 			//Style new graph
 			setTimeout(function () {
-			nodeStyling();
-			edgeStyling();
-			interactiveNodes();
-			highlight();
-			//Change cursor
-			waitOver();
-			//Set zoom level
-			s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1 });
-			//Change button
-			d3.select('.buttonSmall').html('Zoom into<br>');
-			d3.select('.buttonBig').html('Death Star');
+				nodeStyling();
+				edgeStyling();
+				interactiveNodes();
+				highlight();
+				//Change cursor
+				waitOver();
+				//Set zoom level
+				s.cameras[0].goTo({ x: 0, y: 0, angle: 0, ratio: 1 });
+				//Change button
+				d3.select('.buttonSmall').html('Zoom into<br>');
+				d3.select('.buttonBig').html('Death Star');
+				//Reset navigation
+		    	d3.selectAll('.click01').classed('hidden', false);
+	        	d3.selectAll('.click02').classed('hidden', true);
+	        	//Deactivate edge hovering
+	        	s.unbind('overEdge')
+				s.unbind('outEdge')
+				s.refresh();
 			}, 1000)
 			//Change toggle
 			deathStarToggle = 0;
@@ -289,6 +295,7 @@ function highlight () {
 	    toKeep[nodeId] = e.data.node;
 
 		nodes.forEach(function(n) {
+			//Firstly display previously hidden nodes
 			n.hidden = false;
 	      if (toKeep[n.id]) {
 	        n.color = n.originalColor;
@@ -300,6 +307,7 @@ function highlight () {
 	    });
 
 	    edges.forEach(function(e) {
+	    	//Firstly display previously hidden nodes
 	    	e.hidden = false;
 	      if (toKeep[e.source] && toKeep[e.target]) {
 	        e.color = e.originalColor;
